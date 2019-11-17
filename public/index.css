@@ -2,6 +2,14 @@ html, body {
   color: #222222;
 }
 
+a {
+  color: skyblue;
+}
+
+label {
+  user-select: none;
+}
+
 header {
   background-color: #222222;
   height: 50px;
