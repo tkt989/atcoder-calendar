@@ -9,6 +9,7 @@ const text = document.querySelector("#text")
 
 abc.checked = true
 agc.checked = true
+unknown.checked = true
 
 function updateUrl() {
   const type = [abc, agc, unknown].every(input => input.checked) ? "":
