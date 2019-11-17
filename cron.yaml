@@ -1,0 +1,5 @@
+cron:
+  - description: "crawl"
+    url: /crawl
+    schedule: every 60 minutes
+    timezone: Asia/Tokyo
