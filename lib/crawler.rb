@@ -14,7 +14,7 @@ class Crawler
   end
 
   def start
-    url = "#{@base}?lang=ja"
+    url = "#{@base}/home?lang=ja"
 
     doc = self.get_doc(url)
 
