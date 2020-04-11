@@ -24,6 +24,9 @@ class Crawler
       url = "#{@base}#{td[1]["href"]}?lang=ja"
 
       if Contest::exists?(url) then
+        Contest::get_by_url(url).map do |c|
+          c.update
+        end
         next
       end
 

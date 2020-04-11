@@ -28,6 +28,11 @@ class Contest
       .select { |c| params["rating"] == nil || c.rate_range&.include?(params["rating"].to_i)}
   end
 
+  def self.get_by_url(url)
+    query = $datastore.query("Contest").where("url", "=", url)
+    $datastore.run(query).map { |e| self::from_entity(e) }
+  end
+
   def self.exists?(url)
     query = $datastore.query("Contest").
       where("url", "=", url)
@@ -62,14 +67,20 @@ class Contest
 
   def save
     task = $datastore.entity "Contest" do |t|
-      t["url"] = @url
-      t["title"] = @title
-      t["start_date"] = @start_date
-      t["end_date"] = @end_date
-      t["rating"] = @rating
+      fill(t)
     end
 
     $datastore.save task
+  end
+
+  def update
+    query = $datastore.query("Contest").
+      where("url", "=", url)
+
+    entity = $datastore.run(query).first
+    return if entity == nil
+    fill(entity)
+    $datastore.update entity
   end
 
   def to_event
@@ -101,5 +112,13 @@ class Contest
     lower = ($1 || 0).to_i
     upper = $2.to_i
     (lower..upper)
+  end
+
+  def fill(t)
+    t["url"] = @url
+    t["title"] = @title
+    t["start_date"] = @start_date
+    t["end_date"] = @end_date
+    t["rating"] = @rating
   end
 end
